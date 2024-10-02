@@ -72,3 +72,62 @@ const departments = {
 }
 
 console.log(departments);
+
+console.log(`De afdeling sales heeft [${departments.sales.jobs.length}] medewerkers`)
+console.log(`Marketing is een leuke afdeling om te werken. [${departments.marketing.description}].` )
+console.log(`De afdeling Customer heeft [${departments["customer-service"].jobs.length}] medewerkers`)
+console.log(`Sales is een uitdagende afdeling om te werken als Verkoopmanager. [${departments.sales.jobs[1].description}]`)
+
+let userInput = prompt('Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]').toLowerCase();
+console.log(userInput);
+while(departments[userInput] === undefined){
+    userInput = prompt('Ongeldige keuze. Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]').toLowerCase();
+    console.error(userInput);
+}
+    const department = userInput;
+if (departments[department]) {
+    let string = "";
+    departments[department].jobs.forEach((job, index) => {
+        string += ` [${index}] ${job.title}
+        `;
+    })
+    userInput = prompt(`Je koos: ${department}. Over welke functie wil je meer weten? Vul een getal tussen 0 en ${departments[department].jobs.length - 1}
+    ${string}`);
+    //hier zou ik nog kunnen checken of er daadwerkelijk een juist nummer is ingegeven
+    let number = Number(userInput);
+    console.log(`number ${number}`)
+    console.log(typeof number)
+    console.log(isNaN(number))
+    while(isNaN(number) || number > (departments[department].jobs.length - 1) || number < 0){
+        userInput = prompt(`Ongeldige input ${number}= geen nummer of niet in range. Probeer het opnieuw.
+         
+         Je koos: ${department}. Over welke functie wil je meer weten? Vul een getal tussen 0 en ${departments[department].jobs.length - 1}
+    ${string}`);
+        number = Number(userInput);
+    }
+
+
+    console.log(`Je koos [${departments[department].jobs[number].title} Een uitdagende rol! [${departments[department].jobs[number].description}]`);
+}
+
+
+
+function getJobDescription(departmentName, jobTitle) {
+    // Controleer of de afdeling bestaat in het object
+    if (departments[departmentName]) {
+        // Zoek binnen de afdeling naar de juiste baan
+        const job = departments[departmentName].jobs.find(job => job.title === jobTitle);
+        // Als de baan gevonden is, retourneer de beschrijving
+        if (job) {
+            return job.description;
+        } else {
+            return `Job title '${jobTitle}' not found in department '${departmentName}'.`;
+        }
+    } else {
+        return `Department '${departmentName}' not found.`;
+    }
+}
+
+// Gebruik de functie om de beschrijving van de verkoopmanager in de sales-afdeling op te halen
+//const description = getJobDescription('sales', 'Verkoopmanager');
+//console.log(description);
