@@ -71,51 +71,6 @@ const departments = {
     }
 }
 
-console.log(departments);
-
-console.log(`De afdeling sales heeft [${departments.sales.jobs.length}] medewerkers`)
-console.log(`Marketing is een leuke afdeling om te werken. [${departments.marketing.description}].`)
-console.log(`De afdeling Customer heeft [${departments["customer-service"].jobs.length}] medewerkers`)
-console.log(`Sales is een uitdagende afdeling om te werken als Verkoopmanager. [${departments.sales.jobs[1].description}]`)
-
-let userInput = prompt('Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]').toLowerCase();
-console.log(userInput);
-while (departments[userInput] === undefined) {
-    document.getElementById('error-message').textContent = `Ongeldige keuze`;
-    userInput = prompt('Ongeldige keuze. Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]').toLowerCase();
-    console.error(userInput);
-}
-const department = userInput;
-if (departments[department]) {
-    let string = "";
-    departments[department].jobs.forEach((job, index) => {
-        string += ` [${index}] ${job.title}
-        `;
-    })
-    userInput = prompt(`Je koos: ${department}. Over welke functie wil je meer weten? Vul een getal tussen 0 en ${departments[department].jobs.length - 1}
-    ${string}`);
-    //hier zou ik nog kunnen checken of er daadwerkelijk een juist nummer is ingegeven
-    let number = Number(userInput);
-    console.log(`number ${number}`)
-    console.log(typeof number)
-    console.log(isNaN(number))
-    while (isNaN(number) || number > (departments[department].jobs.length - 1) || number < 0) {
-        document.getElementById('error-message').textContent = `Ongeldige input`;
-        userInput = prompt(`Ongeldige input ${number}= geen nummer of niet in range. Probeer het opnieuw.
-         
-         Je koos: ${department}. Over welke functie wil je meer weten? Vul een getal tussen 0 en ${departments[department].jobs.length - 1}
-    ${string}`);
-        number = Number(userInput);
-    }
-
-    const roleTitle = departments[department].jobs[number].title
-    const roleDescription = departments[department].jobs[number].description
-    const departmentDescription = departments[department].description
-    console.log(`Je koos [${roleTitle}] Een uitdagende rol! [${roleDescription}]`);
-    document.getElementById('role-title').textContent = roleTitle;
-    document.getElementById('role-description').textContent = roleDescription;
-    document.getElementById('department-description').textContent = departmentDescription;
-}
 
 
 
