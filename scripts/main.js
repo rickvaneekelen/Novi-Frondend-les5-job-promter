@@ -74,17 +74,18 @@ const departments = {
 console.log(departments);
 
 console.log(`De afdeling sales heeft [${departments.sales.jobs.length}] medewerkers`)
-console.log(`Marketing is een leuke afdeling om te werken. [${departments.marketing.description}].` )
+console.log(`Marketing is een leuke afdeling om te werken. [${departments.marketing.description}].`)
 console.log(`De afdeling Customer heeft [${departments["customer-service"].jobs.length}] medewerkers`)
 console.log(`Sales is een uitdagende afdeling om te werken als Verkoopmanager. [${departments.sales.jobs[1].description}]`)
 
 let userInput = prompt('Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]').toLowerCase();
 console.log(userInput);
-while(departments[userInput] === undefined){
+while (departments[userInput] === undefined) {
+    document.getElementById('error-message').textContent = `Ongeldige keuze`;
     userInput = prompt('Ongeldige keuze. Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]').toLowerCase();
     console.error(userInput);
 }
-    const department = userInput;
+const department = userInput;
 if (departments[department]) {
     let string = "";
     departments[department].jobs.forEach((job, index) => {
@@ -98,7 +99,8 @@ if (departments[department]) {
     console.log(`number ${number}`)
     console.log(typeof number)
     console.log(isNaN(number))
-    while(isNaN(number) || number > (departments[department].jobs.length - 1) || number < 0){
+    while (isNaN(number) || number > (departments[department].jobs.length - 1) || number < 0) {
+        document.getElementById('error-message').textContent = `Ongeldige input`;
         userInput = prompt(`Ongeldige input ${number}= geen nummer of niet in range. Probeer het opnieuw.
          
          Je koos: ${department}. Over welke functie wil je meer weten? Vul een getal tussen 0 en ${departments[department].jobs.length - 1}
@@ -106,27 +108,23 @@ if (departments[department]) {
         number = Number(userInput);
     }
 
-
-    console.log(`Je koos [${departments[department].jobs[number].title} Een uitdagende rol! [${departments[department].jobs[number].description}]`);
+    const roleTitle = departments[department].jobs[number].title
+    const roleDescription = departments[department].jobs[number].description
+    const departmentDescription = departments[department].description
+    console.log(`Je koos [${roleTitle}] Een uitdagende rol! [${roleDescription}]`);
+    document.getElementById('role-title').textContent = roleTitle;
+    document.getElementById('role-description').textContent = roleDescription;
+    document.getElementById('department-description').textContent = departmentDescription;
 }
 
 
 
-function getJobDescription(departmentName, jobTitle) {
-    // Controleer of de afdeling bestaat in het object
-    if (departments[departmentName]) {
-        // Zoek binnen de afdeling naar de juiste baan
-        const job = departments[departmentName].jobs.find(job => job.title === jobTitle);
-        // Als de baan gevonden is, retourneer de beschrijving
-        if (job) {
-            return job.description;
-        } else {
-            return `Job title '${jobTitle}' not found in department '${departmentName}'.`;
-        }
-    } else {
-        return `Department '${departmentName}' not found.`;
-    }
-}
+
+//document.getElementById('role-title').textContent = 'banaan!';
+// <h2 id="role-title"></h2>
+// <p id="department-description"></p>
+// <p id="role-description"></p>
+// <span id="error-message"></span>
 
 // Gebruik de functie om de beschrijving van de verkoopmanager in de sales-afdeling op te halen
 //const description = getJobDescription('sales', 'Verkoopmanager');
